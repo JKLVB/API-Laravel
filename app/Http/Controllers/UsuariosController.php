@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UsuariosController extends Controller
 {
     public function index(){
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::all()->sortBy("id");
         // dd($usuarios);
         return view('usuarios.index', ['usuarios' => $usuarios]);
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('usuarios')->group(function(){
+    Route::get('/', [UsuariosController::class, 'index'])->name('usuarios-index');
+    Route::get('/create', [UsuariosController::class, 'create'])->name('usuarios-create');
+    Route::post('/', [UsuariosController::class, 'store'])->name('usuarios-store');
+    Route::get('/{id}/edit', [UsuariosController::class, 'edit'])->where('id', '[0-9]+')->name('usuarios-edit');
+    Route::put('/{id}', [UsuariosController::class, 'update'])->where('id', '[0-9]+')->name('usuarios-update');
+    Route::delete('/{id}', [UsuariosController::class, 'destroy'])->where('id', '[0-9]+')->name('usuarios-destroy');
+});
+
+Route::fallback(function(){
+    return "Página não encontrada";
 });

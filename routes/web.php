@@ -24,5 +24,5 @@ Route::prefix('usuarios')->group(function(){
 });
 
 Route::fallback(function(){
-    return "Página não encontrada";
+    return abort(404);
 });

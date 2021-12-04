@@ -18,6 +18,14 @@ class UsuariosController extends Controller
     }
 
     public function store(Request $request){
+        $request->validate([
+            'nome' => 'required',
+            'cpf' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:usuarios,cpf'],
+            'senha' => 'required',
+            'telefone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:usuarios,telefone'],
+            'cargo' => 'required'
+        ]);
+
         Usuario::create($request->all());
         return redirect()->route('usuarios-index');
     }
@@ -28,6 +36,14 @@ class UsuariosController extends Controller
     }
 
     public function update(Request $request, $id){
+        $request->validate([
+            'nome' => 'required',
+            'cpf' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:usuarios,cpf,'.$id],
+            'senha' => 'required',
+            'telefone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'unique:usuarios,telefone,'.$id],
+            'cargo' => 'required'
+        ]);
+
         $data = [
             'nome' => $request->nome,
             'cpf' => $request->cpf,
